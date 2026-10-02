@@ -1,46 +1,59 @@
-import type React from "react";
 import { loadFont } from "@remotion/fonts";
-import { staticFile } from "remotion";
-
-export const COLORS = {
-  // Cash'ngo brand blue (logo) and darker shades for depth
-  blue: "#1E9BE0",
-  blueDeep: "#0A3D6B",
-  navy: "#061B33",
-  white: "#FFFFFF",
-  grey: "#8E8E8E",
-  // Gold palette (poster / gold bars)
-  goldLight: "#FFF1B8",
-  gold: "#E8B547",
-  goldMid: "#C9932A",
-  goldDark: "#8A5E12",
-};
-
-// Starts and ends on the same colour so it tiles seamlessly when scrolled.
-export const GOLD_GRADIENT = `linear-gradient(100deg, ${COLORS.gold} 0%, ${COLORS.goldLight} 18%, ${COLORS.gold} 34%, ${COLORS.goldDark} 50%, ${COLORS.goldMid} 66%, ${COLORS.goldLight} 84%, ${COLORS.gold} 100%)`;
-
-// Scrolling metallic gold background (for text and shapes).
-export const goldFill = (
-  frame: number,
-  tileWidth: number,
-  speed = 4,
-): React.CSSProperties => ({
-  backgroundImage: GOLD_GRADIENT,
-  backgroundSize: `${tileWidth}px 100%`,
-  backgroundRepeat: "repeat-x",
-  backgroundPosition: `${-frame * speed}px 0`,
-});
-
-export const FONT_FAMILY = "Montserrat";
-
-for (const weight of ["600", "800", "900"]) {
-  loadFont({
-    family: FONT_FAMILY,
-    url: staticFile(`fonts/montserrat-latin-${weight}-normal.woff2`),
-    weight,
-  });
-}
+import { Easing, interpolate, staticFile } from "remotion";
 
 export const FPS = 30;
 export const WIDTH = 1080;
 export const HEIGHT = 1920;
+export const DURATION = 450;
+
+// Scene boundaries (frames)
+export const S1 = 0;
+export const S2 = 120;
+export const S3 = 235;
+export const S4 = 340;
+
+export const COLORS = {
+  black: "#060606",
+  cream: "#F5EFE3",
+  gold: "#D9AE55",
+  goldLight: "#F6DE9C",
+  goldDeep: "#9A7027",
+  blue: "#1E9BE0", // Cash'ngo brand blue
+};
+
+export const SERIF = "Cormorant Garamond";
+export const SANS = "Montserrat";
+
+const FONTS: [string, string, string, string][] = [
+  [SERIF, "500", "normal", "cormorant-garamond-latin-500-normal.woff2"],
+  [SERIF, "600", "normal", "cormorant-garamond-latin-600-normal.woff2"],
+  [SERIF, "600", "italic", "cormorant-garamond-latin-600-italic.woff2"],
+  [SANS, "500", "normal", "montserrat-latin-500-normal.woff2"],
+  [SANS, "600", "normal", "montserrat-latin-600-normal.woff2"],
+];
+for (const [family, weight, style, file] of FONTS) {
+  loadFont({ family, weight, style, url: staticFile(`fonts/${file}`) });
+}
+
+export const GOLD_TEXT: React.CSSProperties = {
+  backgroundImage: `linear-gradient(180deg, ${COLORS.goldLight} 0%, ${COLORS.gold} 55%, ${COLORS.goldDeep} 100%)`,
+  WebkitBackgroundClip: "text",
+  backgroundClip: "text",
+  color: "transparent",
+};
+
+export const easeInOut = Easing.bezier(0.65, 0, 0.35, 1);
+export const easeOut = Easing.bezier(0.16, 1, 0.3, 1);
+
+// Interpolate through keyframes [frame, value] with an ease on every segment.
+export const keyframes = (
+  frame: number,
+  keys: [number, number][],
+  easing = easeInOut,
+) =>
+  interpolate(
+    frame,
+    keys.map((k) => k[0]),
+    keys.map((k) => k[1]),
+    { easing, extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+  );
