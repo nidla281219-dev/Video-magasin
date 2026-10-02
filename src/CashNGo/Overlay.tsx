@@ -112,7 +112,7 @@ const Karats: React.FC = () => {
             opacity: 0.8,
           }}
         >
-          BIJOUX · CHAÎNES · BAGUES · LINGOTS
+          CHAÎNES · BAGUES · BRACELETS
         </div>
       </Reveal>
     </Reveal>
@@ -188,13 +188,13 @@ const EndCard: React.FC = () => {
     extrapolateRight: "clamp",
   });
   return (
-    <Reveal start={S4 + 6} end={DURATION + 100} style={{ ...top, top: 300 }}>
+    <Reveal start={S4 + 6} end={DURATION + 100} style={{ ...top, top: 230 }}>
       <div
         style={{
-          width: 660,
-          padding: "34px 44px",
+          width: 560,
+          padding: "28px 38px",
           background: "#fff",
-          borderRadius: 28,
+          borderRadius: 24,
           position: "relative",
           overflow: "hidden",
           boxShadow:
@@ -211,12 +211,21 @@ const EndCard: React.FC = () => {
           }}
         />
       </div>
-      <div style={{ height: 70 }} />
-      <MaskLine delay={S4 + 22} style={{ ...headline, fontSize: 112 }}>
-        cashngo<span style={{ color: COLORS.gold }}>.ch</span>
+      <div style={{ height: 56 }} />
+      <MaskLine delay={S4 + 20} style={{ ...headline, fontSize: 100 }}>
+        Rachat d'or
+      </MaskLine>
+      <MaskLine delay={S4 + 27} style={{ ...headline, fontSize: 100 }}>
+        dans le magasin
+      </MaskLine>
+      <MaskLine
+        delay={S4 + 36}
+        style={{ ...headline, ...GOLD_TEXT, fontStyle: "italic", fontSize: 108 }}
+      >
+        depuis 1997
       </MaskLine>
       <div style={{ height: 30 }} />
-      <Kicker delay={S4 + 36}>Rachat d'or en magasin</Kicker>
+      <Kicker delay={S4 + 48}>cashngo.ch</Kicker>
     </Reveal>
   );
 };
@@ -226,6 +235,12 @@ export const Overlay: React.FC = () => {
   const fadeIn = interpolate(frame, [0, 18], [1, 0], { extrapolateRight: "clamp" });
   return (
     <AbsoluteFill>
+      <AbsoluteFill
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(6,6,6,0.75) 0%, rgba(6,6,6,0.45) 35%, rgba(6,6,6,0) 55%)",
+        }}
+      />
       <Hook />
       <Karats />
       <Steps />
