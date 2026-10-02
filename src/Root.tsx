@@ -3,6 +3,8 @@ import { Composition, Folder } from "remotion";
 import { HelloWorld } from "./HelloWorld";
 import { Logo } from "./HelloWorld/Logo";
 import { Title } from "./HelloWorld/Title";
+import { CashNGoPromo, PROMO_DURATION } from "./CashNGo/CashNGoPromo";
+import { FPS, HEIGHT, WIDTH } from "./CashNGo/theme";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -51,7 +53,15 @@ export const RemotionRoot: React.FC = () => {
           titleColor: "#000000",
         }}
       />
-
+      <Composition
+        // Instagram Reel / Story (9:16)
+        id="CashNGoPromo"
+        component={CashNGoPromo}
+        durationInFrames={PROMO_DURATION}
+        fps={FPS}
+        width={WIDTH}
+        height={HEIGHT}
+      />
     </>
   );
 };
